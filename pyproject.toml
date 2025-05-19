@@ -1,0 +1,25 @@
+[project]
+name = "sarge-security"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Clément Hurlin",email = "clement.hurlin@moduscreate.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "sarge (>=0.1.7.post1,<0.2.0)",
+    "flask (>=3.1.1,<4.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "sarge_security", from = "src"}]
+
+
+[tool.poetry.group.dev.dependencies]
+sarif-tools = "^3.0.4"
+csvkit = "^2.1.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

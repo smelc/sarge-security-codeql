@@ -1,0 +1,2 @@
+Tool,Code,Description,Location,Line
+CodeQL,py/code-injection,This code execution depends on a [user-provided value](1).,sarge_security/app.py,26

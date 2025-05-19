@@ -1,0 +1,53 @@
+name: codeql
+
+on:
+  pull_request:
+  push:
+    branches: main
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: "python"
+          queries: security-and-quality
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:python"
+          output: ./codeql-results
+      - name: Install sarif-tools and csvkit # sarif used below is provided by "sarif-tools", while
+                                             # csvkit is used in csv-remove-second-column.sh
+                                             # Note that it'd be better to use the Poetry environment here (because it provisions sarif-tools and csvkit in the dev group),
+                                             # but I went quick and dirty.
+        run: pip install sarif-tools==3.0.4 csvkit==2.1.0 # Same version numbers as in poetry.lock
+      - name: Sarif->CSV
+        run: |
+          ls codeql-results
+          sarif csv ./codeql-results/python.sarif
+          ls ./*.csv*
+          ./abstract-csv-file-differences.sh python.csv
+      - name: Check CodeQL expected output
+        run: |
+          if ! diff -q python.csv .github/codeql/golden.csv
+          then
+            echo "💣 CodeQL's result (after slight rewrite by abstract-csv-file-differences.sh) is unexpected. Here's the diff with the versioned golden file:"
+            diff python.csv .github/codeql/golden.csv
+            echo "Execute the following to update the golden file (and push afterwards):"
+            echo "./create-codeql-db.sh && RECREATE_GOLDEN_FILE=1 ./run-codeql-analysis.sh"
+            exit 1
+          fi
+          echo "CodeQL's output is similar (after slight rewrite by abstract-csv-file-differences.sh) to .github/codeql/golden.csv"
+          echo "Good job ✅"
+          exit 0
