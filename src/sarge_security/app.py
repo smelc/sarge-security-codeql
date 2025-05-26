@@ -55,3 +55,15 @@ def input_to_sarge_run():
     received = input("Enter command to run: ")
     sarge.run(received) # Unsafe, don't do that!
     print("Called sarge")
+
+def input_to_sarge_run_input():
+    """This function shows a vulnerability: it forwards user input (via input())
+       to sarge.run (using the 'input' keyword). This vulnerability is caught thanks to our custom CodeQL rule.
+
+       This function shows that our rule catches user data passed through different means
+       (e.g. a POST request above, or input() here).
+    """
+    received = input("Enter file to read: ")
+    with open(received, "r") as file_handle:
+        sarge.run("cat", input=file_handle) # Unsafe, don't do that!
+        print("Called sarge")
