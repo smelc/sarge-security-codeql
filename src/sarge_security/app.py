@@ -1,5 +1,7 @@
 from flask import Flask, request
 
+import sarge
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -25,5 +27,20 @@ def user_to_eval():
         print(f"Received: {str(received)}")
         eval(received) # Unsafe, don't do that!
         return "Called eval"
+    else:
+        return "Method not allowed"
+
+@app.route("/sarge", methods=["POST"])
+def user_to_sarge_run():
+    """This function shows a vulnerability: it forwards user input (through a POST request)
+       to sarge.run. This vulnerability is caught thanks to our custom CodeQL rule."""
+    print("/sarge handler")
+    if request.method == "POST":
+        received = request.form.get("key")
+        if received is None:
+            return "Please provide data at \"key\""
+        print(f"Received: {str(received)}")
+        sarge.run(received) # Unsafe, don't do that!
+        return "Called sarge"
     else:
         return "Method not allowed"
