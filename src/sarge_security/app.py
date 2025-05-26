@@ -29,3 +29,29 @@ def user_to_eval():
         return "Called eval"
     else:
         return "Method not allowed"
+
+@app.route("/sarge", methods=["POST"])
+def user_to_sarge_run():
+    """This function shows a vulnerability: it forwards user input (through a POST request)
+       to sarge.run. This vulnerability is caught thanks to our custom CodeQL rule."""
+    print("/sarge handler")
+    if request.method == "POST":
+        received = request.form.get("key")
+        if received is None:
+            return "Please provide data at \"key\""
+        print(f"Received: {str(received)}")
+        sarge.run(received) # Unsafe, don't do that!
+        return "Called sarge"
+    else:
+        return "Method not allowed"
+
+def input_to_sarge_run():
+    """This function shows a vulnerability: it forwards user input (via input())
+       to sarge.run. This vulnerability is caught thanks to our custom CodeQL rule.
+
+       This function shows that our rule catches user data passed through different means
+       (e.g. a POST request above, or input() here).
+    """
+    received = input("Enter command to run: ")
+    sarge.run(received) # Unsafe, don't do that!
+    print("Called sarge")
