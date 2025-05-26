@@ -31,3 +31,9 @@ jobs:
         run: |
           ls ./codeql-results
           cat ./codeql-results/*
+      - name: Install sarif-tools
+        run: pip install sarif-tools==3.0.4
+      - name: Sarif->CSV
+        run: |
+          sarif csv codeql-results/python.sarif
+          ls codeql-results
