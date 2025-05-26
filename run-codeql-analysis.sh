@@ -15,7 +15,7 @@ command -v sarif || { echo "sarif is missing. Did you enter the poetry shell?"; 
 
 set -eux
 
-codeql database analyze codeql-db python-security-and-quality --format=sarif-latest --output="$SARIF_FILE"
+codeql database analyze codeql-db --format=sarif-latest --output="$SARIF_FILE"
 
 rm -Rf "$CSV_FILE"
 

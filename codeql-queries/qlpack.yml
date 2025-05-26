@@ -1,0 +1,6 @@
+name: smelc/sarge-queries
+version: 0.0.1
+extractor: python
+library: false
+dependencies:
+  codeql/python-queries: "*" # gives you the standard libs
