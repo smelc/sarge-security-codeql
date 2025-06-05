@@ -22,6 +22,10 @@ import semmle.python.dataflow.new.RemoteFlowSources
 import semmle.python.ApiGraphs
 import SargeFlow::PathGraph // Try uncommenting me to see a warning appear
 
+import SargeLib // Required for the taint tracking query below to consider "input"
+                // as an additional tainting source.
+                // See https://codeql.github.com/docs/ql-language-reference/evaluation-of-ql-programs/#process
+
 private module SargeConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) {
     source instanceof RemoteFlowSource
