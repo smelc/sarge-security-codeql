@@ -53,7 +53,7 @@ def input_to_sarge_run():
        This is visible if you execute the query GetRemoveFlowSource.ql
 
        So to flag this function as vulnerable, we need to declare that input is a tainting source,
-       as visible in Sarge.ql
+       as visible in SargeLib.qll
     """
     received = input("Enter command to run: ")
     sarge.run(received) # Unsafe, don't do that!
