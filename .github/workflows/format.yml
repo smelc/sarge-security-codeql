@@ -1,0 +1,28 @@
+name: format
+
+on:
+  pull_request:
+  push:
+    branches: main
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install CodeQL CLI
+        run: |
+          # Maybe not the same version as the one used in codeql.yml ¯_(ツ)_/¯
+          wget https://github.com/github/codeql-cli-binaries/releases/download/v2.20.0/codeql-linux64.zip
+          unzip codeql-linux64.zip
+          echo "$PWD/codeql" >> "$GITHUB_PATH"
+      - name: Check formatting
+        run:
+          git ls-files '*.ql' '*.qll' | xargs codeql query format --check-only

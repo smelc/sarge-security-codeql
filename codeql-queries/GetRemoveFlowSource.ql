@@ -1,4 +1,4 @@
- /**
+/**
  * @name GetRemoteFlowSource
  * @description Find all flow sources in the project
  * @kind problem
@@ -8,6 +8,7 @@
  * @precision very-high
  * @id py/get-remote-flow-source
  */
+
 import python
 import semmle.python.dataflow.new.RemoteFlowSources
 
