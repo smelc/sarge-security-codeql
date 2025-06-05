@@ -1,4 +1,4 @@
 Tool,Code,Description,Location,Line
-CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,43
-CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,59
-CodeQL,py/code-injection,This code execution depends on a [user-provided value](1).,sarge_security/app.py,28
+CodeQL,py/code-injection,This code execution depends on a [user-provided value](1).,sarge_security/app.py,28.0
+CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,43.0
+CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,59.0
