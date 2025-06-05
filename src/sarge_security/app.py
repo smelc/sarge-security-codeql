@@ -44,3 +44,17 @@ def user_to_sarge_run():
         return "Called sarge"
     else:
         return "Method not allowed"
+
+def input_to_sarge_run():
+    """This function shows a vulnerability: it forwards user input (via input())
+       to sarge.run. Having sarge.run flagged as a sink doesn't suffice to catch
+       this vulnerability, because CodeQL doesn't consider input() as a tainting source
+       (explained here: https://github.com/github/codeql/issues/14347#issuecomment-1742901643).
+       This is visible if you execute the query GetRemoveFlowSource.ql
+
+       So to flag this function as vulnerable, we need to declare that input is a tainting source,
+       as visible in Sarge.ql
+    """
+    received = input("Enter command to run: ")
+    sarge.run(received) # Unsafe, don't do that!
+    print("Called sarge")
