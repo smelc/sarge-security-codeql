@@ -11,6 +11,7 @@
 
 import python
 import semmle.python.dataflow.new.RemoteFlowSources
+import SargeLib
 
 from RemoteFlowSource::Range src
 select src, "Potential flow source"
