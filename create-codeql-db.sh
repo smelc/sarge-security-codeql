@@ -16,6 +16,6 @@ DB_TARGET="codeql-db-$TARGET"
 
 rm codeql-db "$DB_TARGET" -Rf
 
-codeql database create --language=python "$DB_TARGET" --source-root=src --codescanning-config=.github/codeql/codeql-config.yml
+codeql database create --language=python "$DB_TARGET" --source-root=src
 
 ln -s "$DB_TARGET" codeql-db
