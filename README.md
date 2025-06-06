@@ -7,17 +7,25 @@ This repository's purpose is to show how to model a Python library using [CodeQL
 
 ## Develop CodeQL rules
 
-Developing CodeQL rules can feel odd, because you work in two repositories at the same time:
+We recommend installing the [vscode CodeQL extension](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-codeql) and to develop rules in the [./codeql-queries] directory. If you have installed `codeql` by unpacking the [codeql-bundle](https://github.com/github/codeql-action/releases) and made the `codeql` binary available in your `PATH`, you should have support for navigating the CodeQL standard library from an editor launched in this repository.
 
-1. In the repository you are testing your rules' behavior (this one)
-1. In the [CodeQL repository](https://github.com/github/codeql), because VSCode will provide linking, syntax highlighting, etc. for writing queries.
-
-### Run CodeQL on the CLI
+### Run CodeQL like the CI does
 
 To test vulnerabilities found by `codeql` on this codebase, the workflow is the following:
 
-1. Call `./create-codeql-db.sh`. This creates a `codeql-db-GIT_HASH` directory and links the `codeql-db` directory to it. In your clone of the CodeQL repository, you'll want to add the `codeql-db` folder as a CodeQL database (to test your queries).
-1. Call `./run-codeql-analysis.sh`. This call `codeql` on the database `codeql-db` and then calls [sarif](https://github.com/microsoft/sarif-tools) to present the results in text format. This is handy to test on the CLI locally.
+1. Call `./create-codeql-db.sh`. This creates a `codeql-db-GIT_HASH` directory and links the `codeql-db` directory to it.
+1. Call `./run-codeql-analysis.sh`. This call `codeql` on the database `codeql-db` and then calls [sarif](https://github.com/microsoft/sarif-tools) to present the results in text format. This is handy to locally test on the CLI (as opposed to launching queries within vscode, which can be flaky).
+
+### Test a single query
+
+You need to create the database with `./create-codeql-db.sh` as above, but then to test
+a single query you are currently developing (say [codeql-queries/GetSargeRunSinks.ql](./codeql-queries/GetSargeRunSinks.ql)), do as follows:
+
+```shell
+./run-codeql-analysis.sh ./codeql-queries/GetSargeRunSinks.ql
+```
+
+When you change your query, unless you've changed the Python code in [app](./app), you don't need to rebuild the database.
 
 ## Witness the vulnerabilities
 
