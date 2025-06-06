@@ -58,3 +58,15 @@ def input_to_sarge_run():
     received = input("Enter command to run: ")
     sarge.run(received) # Unsafe, don't do that!
     print("Called sarge")
+
+def input_to_sarge_run_input():
+    """This function shows a vulnerability: it forwards user input (via input())
+       to sarge.run (using the 'input' keyword).
+    """
+    received = input("Enter file to read: ")
+    # This is unrealistic, but that's for V1:
+    sarge.run("cat", input=received) # Unsafe, don't do that!
+    # Ultimately we want to do that:
+    # with open(received, "r") as file_handle:
+    #     sarge.run("cat", input=file_handle) # Unsafe, don't do that!
+    #     print("Called sarge")
