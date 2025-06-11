@@ -1,3 +1,4 @@
 queries:
   - uses: ./codeql-queries/Sarge.qls
   - uses: python-security-and-quality
+threat-models: local

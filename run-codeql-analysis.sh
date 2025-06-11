@@ -32,9 +32,9 @@ then
   # Fill array with lines obtained from yq:
   mapfile -t queries < <(yq '.queries[].uses' "$CODEQL_CONFIG_FILE")
   # Pass queries as separate arguments
-  codeql database analyze codeql-db "${queries[@]}" --format=sarif-latest --output="$SARIF_FILE"
+  codeql database analyze codeql-db --threat-model=local "${queries[@]}" --format=sarif-latest --output="$SARIF_FILE"
 else
-  codeql database analyze codeql-db "$1" --format=sarif-latest --output="$SARIF_FILE"
+  codeql database analyze codeql-db --threat-model=local "$1" --format=sarif-latest --output="$SARIF_FILE"
 fi
 
 rm -Rf "$CSV_FILE"
