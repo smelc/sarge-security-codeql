@@ -3,3 +3,4 @@ CodeQL,py/code-injection,This code execution depends on a [user-provided value](
 CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,43.0
 CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,59.0
 CodeQL,py/path-injection,This path depends on a [user-provided value](1).,sarge_security/app.py,67.0
+CodeQL,py/code-injection,Tainted data passed to sarge,sarge_security/app.py,68.0

@@ -10,12 +10,6 @@ import semmle.python.dataflow.new.RemoteFlowSources
 import semmle.python.ApiGraphs
 import semmle.python.dataflow.new.DataFlow
 
-class InputCall extends RemoteFlowSource::Range {
-  InputCall() { this = API::builtin("input").getACall() }
-
-  override string getSourceType() { result = "input built-in function" }
-}
-
 private API::CallNode get_run_call() {
   result = API::moduleImport("sarge").getMember("run").getACall()
 }

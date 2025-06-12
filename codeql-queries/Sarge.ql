@@ -17,8 +17,8 @@
 import python
 import semmle.python.dataflow.new.DataFlow
 import semmle.python.dataflow.new.TaintTracking
-import semmle.python.dataflow.new.RemoteFlowSources
 import semmle.python.ApiGraphs
+import semmle.python.Concepts
 import SargeFlow::PathGraph // Try uncommenting me to see a warning appear
 // This import is required for the taint tracking query below to consider "input"
 // as an additional tainting source.
@@ -26,7 +26,7 @@ import SargeFlow::PathGraph // Try uncommenting me to see a warning appear
 import SargeLib
 
 private module SargeConfig implements DataFlow::ConfigSig {
-  predicate isSource(DataFlow::Node source) { source instanceof RemoteFlowSource }
+  predicate isSource(DataFlow::Node source) { source instanceof ActiveThreatModelSource }
 
   predicate isSink(DataFlow::Node sink) { sink instanceof DangerousSargeRunArg }
 }
