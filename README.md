@@ -7,7 +7,7 @@ This repository's purpose is to show how to model a Python library using [CodeQL
 
 ## Develop CodeQL rules
 
-We recommend installing the [vscode CodeQL extension](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-codeql) and to develop rules in the [./codeql-queries] directory. If you have installed `codeql` by unpacking the [codeql-bundle](https://github.com/github/codeql-action/releases) and made the `codeql` binary available in your `PATH`, you should have support for navigating the CodeQL standard library from an editor launched in this repository.
+We recommend installing the [vscode CodeQL extension](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-codeql) and to develop rules in the [codeql-queries](./codeql-queries) directory. If you have installed `codeql` by unpacking the [codeql-bundle](https://github.com/github/codeql-action/releases) and made the `codeql` binary available in your `PATH`, you should have support for navigating the CodeQL standard library from an editor launched in this repository.
 
 ### Run CodeQL like the CI does
 
