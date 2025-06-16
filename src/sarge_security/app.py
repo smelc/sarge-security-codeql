@@ -1,3 +1,4 @@
+from typing import Any
 from flask import Flask, request
 
 import sarge
@@ -67,3 +68,23 @@ def input_to_sarge_run_input():
     with open(received, "r") as file_handle:
         sarge.run("cat", input=file_handle) # Unsafe, don't do that!
         print("Called sarge")
+
+class PostData:
+
+    def __init__(self, key: Any):
+        self.key = key
+
+@app.route("/object", methods=["POST"])
+def user_to_sarge_run_via_object():
+    """This function shows a vulnerability: it forwards user input (through a POST request)
+       to sarge.run. This vulnerability is caught thanks to our custom CodeQL rule."""
+    print("/sarge object handler")
+    if request.method == "POST":
+        received = request.form.get("key")
+        if received is None:
+            return "Please provide data at \"key\""
+        d = PostData(received)
+        sarge.run(d.key) # Unsafe, don't do that!
+        return "Called sarge"
+    else:
+        return "Method not allowed"
