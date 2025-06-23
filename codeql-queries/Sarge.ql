@@ -29,6 +29,8 @@ private module SargeConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node source) { source instanceof ActiveThreatModelSource }
 
   predicate isSink(DataFlow::Node sink) { sink instanceof DangerousSargeRunArg }
+
+  predicate isBarrier(DataFlow::Node node) { node instanceof AppSanitizer }
 }
 
 module SargeFlow = TaintTracking::Global<SargeConfig>;

@@ -88,3 +88,25 @@ def user_to_sarge_run_via_object():
         return "Called sarge"
     else:
         return "Method not allowed"
+
+def my_sanitizer(_input: str) -> str:
+    # We need to use "_input", otherwise CodeQL would not consider this function
+    # as breaking tainting.
+    return _input[0:0]
+
+@app.route("/object_safe", methods=["POST"])
+def user_to_sarge_run_via_object_sanitized():
+    """This function shows how to avoid the previous vulnerability,
+       by using a custom sanitizer function that breaks the tainted data's propagation.
+       See how 'isBarrier' is defined in SargeLib.qll."""
+    print("/sarge object handler")
+    if request.method == "POST":
+        received = request.form.get("key")
+        if received is None:
+            return "Please provide data at \"key\""
+        d = PostData(received)
+        to_sarge = my_sanitizer(d.key) # Sanitize input, to avoid vulnerability
+        sarge.run(to_sarge)
+        return "Called sarge"
+    else:
+        return "Method not allowed"
