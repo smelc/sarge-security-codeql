@@ -9,6 +9,12 @@
 
 set -eux
 
+LINE_COUNT=$(csvstat --count "$1")
+if [ "$LINE_COUNT" -eq 0 ]; then
+  # CSV file has no rows (only a header): nothing to do
+  exit 0
+fi
+
 declare -r TMP_FILE="$1.out"
 rm -Rf "$TMP_FILE"
 
