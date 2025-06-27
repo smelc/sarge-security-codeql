@@ -35,15 +35,16 @@ jobs:
       - name: Sarif->CSV
         run: |
           ls codeql-results
-          sarif csv ./codeql-results/python.sarif
+          mv ./codeql-results/python.sarif ./codeql-results/codeql.sarif
+          sarif csv ./codeql-results/codeql.sarif
           ls ./*.csv*
-          ./abstract-csv-file-differences.sh python.csv
+          ./abstract-csv-file-differences.sh codeql.csv
       - name: Check CodeQL expected output
         run: |
-          if ! diff -q python.csv .github/codeql/golden.csv
+          if ! diff -q codeql.csv .github/codeql/golden.csv
           then
             echo "💣 CodeQL's result (after slight rewrite by abstract-csv-file-differences.sh) is unexpected. Here's the diff with the versioned golden file:"
-            diff python.csv .github/codeql/golden.csv
+            diff codeql.csv .github/codeql/golden.csv
             echo "Execute the following to update the golden file (and push afterwards):"
             echo "./create-codeql-db.sh && RECREATE_GOLDEN_FILE=1 ./run-codeql-analysis.sh"
             exit 1
