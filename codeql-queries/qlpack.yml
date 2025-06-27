@@ -1,3 +1,4 @@
+# Required for Sarge.qls to work
 name: smelc/sarge-queries
 version: 0.0.1
 extractor: python
